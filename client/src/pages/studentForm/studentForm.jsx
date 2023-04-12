@@ -1,7 +1,7 @@
 /* eslint-disable array-callback-return */
-import React, { useState, useEffect } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import "./StudentForm.css";
-import axios from "axios"
 function StudentForm() {
   // const [name, setName] = useState("");
   // const [email, setEmail] = useState("");
@@ -14,9 +14,9 @@ function StudentForm() {
   // const [sem, setSem] = useState("");
   // const [year, setYear] = useState("");
   // const [projectName, setProjectName] = useState("");
+
+  const [students, setStudents] = useState([]);
   const [projects, setProjects] = useState([]);
-  const [project,setProject]=useState("")
-  const [students,setStudents]= useState([]);
   // const [selectedProject, setSelectedProject] = useState("");
   const [teammates, setTeammates] = useState([
     {
@@ -60,7 +60,6 @@ function StudentForm() {
   //     .then((data) => console.log(data))
   //     .catch((error) => console.error(error));
   // };
-  
 
   const handleAddTeammate = () => {
     if (teammates.length < 4) {
@@ -114,211 +113,140 @@ function StudentForm() {
     setTeacher(newTeacher);
   };
 
-
-
   const handleDeleteTeacher = (index) => {
     const newTeacher = [...teacher];
     newTeacher.splice(index, 1);
     setTeacher(newTeacher);
   };
 
-  const handleSubmit = async(e) => {
-  //   if (userType == "user" ) {
-  //     e.preventDefault();
-  //     alert("Invalid Admin");
-  //   } else {
-  //     e.preventDefault();
-
-  //     console.log(name, email, section, sem, year, branch, reg, teacherName, teacherEmail, specialization);
-  //     fetch("http://localhost:5000/stuednt-form-data", {
-  //       method: "POST",
-  //       crossDomain: true,
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Accept: "application/json",
-  //         "Access-Control-Allow-Origin": "*",
-  //       },
-  //       body: JSON.stringify({
-  //           uname: name,
-  //           email,
-  //           section,
-  //           sem,
-  //           year,
-  //           branch,
-  //           reg,
-  //           tname: teacherName,
-  //           temail: teacherEmail,
-  //           specialization,
-  //       }),
-  //     })
-  //       .then((res) => res.json())
-  //       .then((data) => {
-  //         console.log(data, "studentDetails");
-  //         if (data.status == "ok") {
-  //           alert("Form Submission Successful");
-  //         } else {
-  //           alert("Something went wrong");
-  //         }
-  //       });
-  //   }
-  // };
-
-
-
+  //
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    const createTeammate=async()=>{
-      
-      teammates.map(async(m)=>{
-        const{name,email,reg,branch,section,sem,year}=m;
-        console.log({name,email,reg,branch,section,sem,year});
-         const res =await axios.post("http://localhost:5000/auth/register/student",{
-          name,
-          email,
-          section,
-          branch,
-          regNo:reg,
-          sem,
-          year,
-          // tname: teacherName,
-          // temail: teacherEmail,
-          // specialization,
-        })
-       students.push(res.data)
-        
-      })
-      
 
-    }
-    await createTeammate();  
-    
-    let s=[];
-    students.map((m)=>s.push(m))
-    
-    const createTeam=async()=>{
-      
-      var res=await axios.post("http://localhost:5000/team",{
-        students:s,
-        /* projectName:teacher[0].projectName, */
-      })
-      console.log(res.data); 
-    }
+    const createTeammate = async () => {
+      for (const m of teammates) {
+        const { name, email, reg, branch, section, sem, year } = m;
+        const res = await axios.post(
+          "http://localhost:5000/auth/register/student",
+          {
+            name,
+            email,
+            section,
+            branch,
+            regNo: reg,
+            sem,
+            year,
+          }
+        );
+        students.push(res.data);
+      }
+    };
 
-    await  createTeam() 
+    await createTeammate();
+    console.log(teacher);
+    const createTeam = async () => {
+      const res = await axios.post("http://localhost:5000/team", {
+        students,
+        projectName: teacher[0].projectName,
+      });
+      console.log(res.data);
+    };
 
-
-    e.preventDefault();
-    const createTeacher=async()=>{
-      teacher.map((m)=>{
-        const{teacherName,teacherEmail,specialization}=m;
-        console.log({teacherName,teacherEmail,specialization});
-         axios.post("http://localhost:5000/studentForm",{
+    const createTeacher = async () => {
+      for (const m of teacher) {
+        const { teacherName, teacherEmail, specialization } = m;
+        const res = await axios.post("http://localhost:5000/studentForm", {
           teacherName,
           teacherEmail,
           specialization,
-        })
-        
-      })
-     
-      
+        });
+        console.log(res.data);
+      }
+    };
 
-    }
-
-
-    // createTeammate();
-    /* createTeacher(); */
-    /* fetch("http://localhost:5000/studentForm", {
-      method: "POST",
-      crossDomain: true,
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        "Access-Control-Allow-Origin": "*",
+    /*  await createTeacher(); */
+    setStudents([]);
+    setTeacher([
+      {
+        teacherName: "",
+        teacherEmail: "",
+        specialization: "",
+        projectName: "",
       },
-      body: JSON.stringify({
-          uname: name,
-          email,
-          section,
-          sem,
-          year,
-          branch,
-          reg,
-          tname: teacherName,
-          temail: teacherEmail,
-          specialization,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data, "studentDetails");
-        if (data.status === "ok") {
-          alert("Form Submission Successful");
-        } else {
-          alert("Something went wrong");
-        }
-      }); */
-  
-};
+    ]);
+    setTeammates([
+      {
+        name: "",
+        email: "",
+        reg: "",
+        branch: "",
+        section: "",
+        sem: "",
+        year: "",
+        // selectedProject: "",
+      },
+    ]);
 
-// const handleSubmit = (e) => {
-//   e.preventDefault();
+    alert("Form Submission Successful");
+  };
 
-//   const data = {
-//     name,
-//     email,
-//     reg,
-//     branch,
-//     section,
-//     specialization,
-//     teacherName,
-//     teacherEmail,
-//     sem,
-//     year,
-//     projectName: selectedProject,
-//     teammates,
-//   };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
 
-//   fetch("http://localhost:3000/submit-form-data", {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(data),
-//   })
-//     .then((response) => response.json())
-//     .then((result) => {
-//       console.log("Form submitted successfully:", result);
-//       // Clear form fields after successful submission
-//       setName("");
-//       setEmail("");
-//       setReg("");
-//       setBranch("");
-//       setSection("");
-//       setSpecialization("");
-//       setTeacherName("");
-//       setTeacherEmail("");
-//       setSem("");
-//       setYear("");
-//       setProjectName("");
-//       setSelectedProject("");
-//       setTeammates([
-//         {
-//           name: "",
-//           email: "",
-//           reg: "",
-//           branch: "",
-//           section: "",
-//           sem: "",
-//           year: "",
-//         },
-//       ]);
-//     })
-//     .catch((error) => {
-//       console.error("Error submitting form:", error);
-//     });
-// };
+  //   const data = {
+  //     name,
+  //     email,
+  //     reg,
+  //     branch,
+  //     section,
+  //     specialization,
+  //     teacherName,
+  //     teacherEmail,
+  //     sem,
+  //     year,
+  //     projectName: selectedProject,
+  //     teammates,
+  //   };
 
-
+  //   fetch("http://localhost:3000/submit-form-data", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(data),
+  //   })
+  //     .then((response) => response.json())
+  //     .then((result) => {
+  //       console.log("Form submitted successfully:", result);
+  //       // Clear form fields after successful submission
+  //       setName("");
+  //       setEmail("");
+  //       setReg("");
+  //       setBranch("");
+  //       setSection("");
+  //       setSpecialization("");
+  //       setTeacherName("");
+  //       setTeacherEmail("");
+  //       setSem("");
+  //       setYear("");
+  //       setProjectName("");
+  //       setSelectedProject("");
+  //       setTeammates([
+  //         {
+  //           name: "",
+  //           email: "",
+  //           reg: "",
+  //           branch: "",
+  //           section: "",
+  //           sem: "",
+  //           year: "",
+  //         },
+  //       ]);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error submitting form:", error);
+  //     });
+  // };
 
   return (
     <div className="app__studentform">
@@ -502,11 +430,7 @@ function StudentForm() {
                 className="teacher-input"
                 value={teacher.specialization}
                 onChange={(e) =>
-                  handleTeacherChange(
-                    index,
-                    "specialization",
-                    e.target.value
-                  )
+                  handleTeacherChange(index, "specialization", e.target.value)
                 }
               />
             </div>

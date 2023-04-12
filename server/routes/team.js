@@ -6,7 +6,6 @@ const { verifyToken } = require("../verifytoken");
 router.post("/", async (req, res, next) => {
   //create new team
   try {
-    console.log(req.body.students);
     const studentID = req.body.students; //students  must be an array of studentid's forming a team .Like [209301543,209305634,...etc]
     const newTeam = new Team({
       name: req.body.teamName,
