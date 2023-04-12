@@ -54,7 +54,7 @@ app.listen(process.env.PORT || "5000", () => {
 //for login student http://localhost:5000/auth/login/student
 //for login teacher http://localhost:5000/auth/login/teacher
 //for register student  http://localhost:5000/auth/register/student
-//for register teacher  http://localhost:5000/auth/register/student
+//for register teacher  http://localhost:5000/auth/register/teacher
 //for team creation http://localhost:5000/team
 //for teacher  http://localhost:5000/teacher
 //for (student get by reg no) http://localhost:5000/student/:id

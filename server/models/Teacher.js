@@ -18,6 +18,7 @@ const teacherSchema = mongoose.Schema(
       //if only teacher is logging in then use the password
       type: String,
     },
+    projectRequests:[{}]
   },
   { timestamps: true }
 );
