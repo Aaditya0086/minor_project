@@ -143,7 +143,6 @@ function StudentForm() {
     };
 
     await createTeammate();
-    console.log(teacher);
     const createTeam = async () => {
       const res = await axios.post("http://localhost:5000/team", {
         students,
@@ -151,6 +150,8 @@ function StudentForm() {
       });
       console.log(res.data);
     };
+
+    await createTeam();
 
     const createTeacher = async () => {
       for (const m of teacher) {
