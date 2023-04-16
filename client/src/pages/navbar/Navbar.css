@@ -2,3 +2,38 @@
     background-color: #ffffff;
     box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
   }
+
+  .navbar {
+    background-color: #ffffff;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.05);
+  }
+  
+  .navbar-brand {
+    color: #000000;
+    font-weight: bold;
+    font-size: 24px;
+  }
+  
+  .navbar-nav .nav-link {
+    color: #000000;
+    font-weight: bold;
+    font-size: 18px;
+    margin-right: 20px;
+  }
+  
+  .navbar-nav .nav-link:hover {
+    color: #ffc107;
+  }
+  
+  .profile-link {
+    color: #000000;
+    font-weight: bold;
+    font-size: 18px;
+    margin-left: 20px;
+  }
+  
+  .profile-link:hover {
+    color: #ffc107;
+    text-decoration: none;
+  }
+  

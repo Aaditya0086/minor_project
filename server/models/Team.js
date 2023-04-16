@@ -7,6 +7,9 @@ const teamSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    teacher_Name: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

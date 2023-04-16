@@ -1,6 +1,8 @@
 const router = require("express").Router();
 const Teacher = require("../models/Teacher");
 const Student = require("../models/Student");
+const LoginStudent = require("../models/LoginStudent");
+const LoginTeacher = require("../models/LoginTeacher");
 const jwt = require("jsonwebtoken");
 
 router.post("/register/teacher", async (req, res, next) => {
@@ -18,10 +20,11 @@ router.post("/register/teacher", async (req, res, next) => {
   }
 });
 
-router.post("/login/teacher", async (req, res, next) => {
+router.post("/login/loginTeacher", async (req, res, next) => {
   //login for teacher(admin)
   try {
-    const user = await Teacher.findOne({ email: req.body.email });
+    // const {email, password} = req.body
+    const user = await LoginTeacher.findOne({ email: req.body.email });
     if (!user) return res.status(403).json("Wrong Email!");
 
     /* const isCorrect = await bcrypt.compare(req.body.password, user.password); */ //if password hashed
@@ -29,6 +32,13 @@ router.post("/login/teacher", async (req, res, next) => {
     /* if (!isCorrect) {
       return res.status(403).json("Wrong Password!");
     } */
+
+    const passwordMatch = req.body.password === user.password;
+
+    if (!passwordMatch) {
+    return res.status(403).json("Wrong Password!");
+    }
+
 
     const token = jwt.sign({ id: user._id }, process.env.JWT, {
       expiresIn: "24h",
@@ -63,10 +73,10 @@ router.post("/register/student", async (req, res, next) => {
   }
 });
 
-router.post("/login/student", async (req, res, next) => {
+router.post("/login/loginStudent", async (req, res, next) => {
   //login for teacher(admin)
   try {
-    const user = await Student.findOne({ email: req.body.email });
+    const user = await LoginStudent.findOne({ email: req.body.email });
     if (!user) return res.status(403).json("Wrong Email!");
 
     /* const isCorrect = await bcrypt.compare(req.body.password, user.password); */ //if password hashed
@@ -74,6 +84,13 @@ router.post("/login/student", async (req, res, next) => {
     /* if (!isCorrect) {
       return res.status(403).json("Wrong Password!");
     } */
+
+    const passwordMatch = req.body.password === user.password;
+
+    if (!passwordMatch) {
+    return res.status(403).json("Wrong Password!");
+    }
+    
 
     const token = jwt.sign({ id: user._id }, process.env.JWT, {
       expiresIn: "24h",

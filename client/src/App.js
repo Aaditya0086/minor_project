@@ -8,6 +8,9 @@ import Login from "./components/login.component";
 import UserDetails from "./components/userDetails";
 import Navbar from "./pages/navbar/navbar";
 import StudentForm from "./pages/studentForm/studentForm";
+import AdminHome from "./components/adminHome";
+import StudentProfile from "../src/pages/studentProfile/StudentProfile.js";
+import TeacherProfile from "../src/pages/teacherProfile/TeacherProfile.js";
 // import SignUp from './components/signup.component'
 
 function App() {
@@ -57,6 +60,18 @@ function App() {
               <Route
                 path="/student-form"
                 element={userData ? <StudentForm /> : <Login />}
+              />
+              <Route
+                path="/admin-home"
+                element={<AdminHome />}
+              />
+              <Route
+                path="/student-profile"
+                element={<StudentProfile />}
+              />
+              <Route
+                path="/teacher-profile"
+                element={<TeacherProfile />}
               />
               {/* <Route path="/sign-up" element={<SignUp />} /> */}
             </Routes>

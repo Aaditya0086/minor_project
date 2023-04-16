@@ -11,6 +11,7 @@ router.post("/", async (req, res, next) => {
       name: req.body.teamName,
       students: studentID,
       project: req.body.projectName,
+      teacher_Name: req.body.teacherName,
     });
 
     await newTeam.save();

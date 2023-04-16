@@ -32,6 +32,7 @@ const studentSchema = mongoose.Schema(
       required: true,
       unique: true,
     },
+    //mobNo, course
   },
   { timestamps: true }
 );

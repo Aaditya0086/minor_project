@@ -41,51 +41,81 @@
 
 //   return admin ? <AdminHome /> : <UserHome userData={userData} />;
 // }
+// import React, { useEffect, useState } from "react";
+// import AdminHome from './adminHome'
+// import UserHome from '../pages/userHome/userHome';
+// import { useSelector } from "react-redux";
+
+// export default function UserDetails() {
+//   const { userData,error } = useSelector((state) => state.user);
+//   // const 
+
+//  /*  useEffect(() => {
+//     fetch("http://localhost:5000/userData", {
+//       method: 'POST', 
+//       headers: {
+//         "Content-Type": "application/json",
+//         Accept: "application/json",
+//         "Access-Control-Allow-Origin": "*",
+//       },
+//       body: JSON.stringify({
+//         token: window.localStorage.getItem('token'), 
+//       }),
+//     })
+//       .then((res) => res.json())
+//       .then((data) => {
+//         console.log(data, 'userData');
+
+//         if (data.status === 'ok') {
+//           if (data.data.userType === 'Admin') {
+//             setAdmin(true);
+//           }
+//           setUserData(data.data);
+//         } else {
+//           setError(data.message || 'Unknown error');
+//         }
+//       })
+//       .catch((error) => {
+//         console.error(error);
+//         setError('Unable to fetch user data');
+//       });
+//   }, []); */
+
+//    if (error) {
+//     return <div>{error}</div>;
+//   } else if (admin) {
+//     return <AdminHome />;
+//   } else { 
+//     return <UserHome />
+  
+// ;
+// }
+// }
+
+
+
+
 import React, { useEffect, useState } from "react";
 import AdminHome from './adminHome'
 import UserHome from '../pages/userHome/userHome';
 import { useSelector } from "react-redux";
 
 export default function UserDetails() {
-  const { userData,error } = useSelector((state) => state.user);
+  const { userData, error } = useSelector((state) => state.user);
+  const [admin, setAdmin] = useState(false);
 
- /*  useEffect(() => {
-    fetch("http://localhost:5000/userData", {
-      method: 'POST', 
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify({
-        token: window.localStorage.getItem('token'), 
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data, 'userData');
+  useEffect(() => {
+    if (userData && userData.userType === 'Admin') {
+      setAdmin(true);
+    }
+  }, [userData]);
 
-        if (data.status === 'ok') {
-          if (data.data.userType === 'Admin') {
-            setAdmin(true);
-          }
-          setUserData(data.data);
-        } else {
-          setError(data.message || 'Unknown error');
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-        setError('Unable to fetch user data');
-      });
-  }, []); */
-
- /*  if (error) {
+  if (error) {
     return <div>{error}</div>;
   } else if (admin) {
     return <AdminHome />;
-  } else { */
-    return <UserHome />
-  
-;
+  } else { 
+    return <UserHome />;
+  }
 }
+
