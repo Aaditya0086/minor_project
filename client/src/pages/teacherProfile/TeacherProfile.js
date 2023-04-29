@@ -22,7 +22,7 @@ export default function TeacherProfile() {
             </div>
             <div className='app__tp-container-text'>
                 <h4>ID:</h4>
-                <p>T1</p>
+                <p>{userData && userData.iD}</p>
             </div>
             <div className='app__tp-container-text'>
                 <h4>Email:</h4>
@@ -33,7 +33,7 @@ export default function TeacherProfile() {
                 <p>{userData && userData.mobNo}</p>
             </div>
             <div className='app__tp-container-text'>
-                <h4>specialization:</h4>
+                <h4>Specialization:</h4>
                 <p>{userData && userData.specialization}</p>
             </div>
 

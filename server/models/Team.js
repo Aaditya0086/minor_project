@@ -7,6 +7,7 @@ const teamSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    teachers: [],
     teacher_Name: {
       type: String,
     },

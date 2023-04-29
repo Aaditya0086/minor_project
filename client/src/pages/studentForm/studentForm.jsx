@@ -504,17 +504,6 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "./StudentForm.css";
 function StudentForm() {
-  // const [name, setName] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [reg, setReg] = useState("");
-  // const [branch, setBranch] = useState("");
-  // const [section, setSection] = useState("");
-  // const [specialization, setSpecialization] = useState("");
-  // const [teacherName, setTeacherName] = useState("");
-  // const [teacherEmail, setTeacherEmail] = useState("");
-  // const [sem, setSem] = useState("");
-  // const [year, setYear] = useState("");
-  // const [projectName, setProjectName] = useState("");
 
   const [students, setStudents] = useState([]);
   const [projects, setProjects] = useState([]);
@@ -528,6 +517,7 @@ function StudentForm() {
       section: "",
       sem: "",
       year: "",
+      mobNo:"",
       // selectedProject: "",
     },
   ]);
@@ -545,22 +535,6 @@ function StudentForm() {
       .catch((error) => console.error(error));
   }, []);
 
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   // Submit form data to server
-  //   fetch("http://localhost:5000/submit-form-data", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       teammates,
-  //     }),
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => console.log(data))
-  //     .catch((error) => console.error(error));
-  // };
 
   const handleAddTeammate = () => {
     if (teammates.length < 4) {
@@ -572,6 +546,7 @@ function StudentForm() {
           reg: "",
           branch: "",
           section: "",
+          mobNo:"",
           selectedProject: "",
         },
       ]);
@@ -626,7 +601,7 @@ function StudentForm() {
 
     const createTeammate = async () => {
       for (const m of teammates) {
-        const { name, email, reg, branch, section, sem, year } = m;
+        const { name, email, reg, branch, section, sem, year, mobNo } = m;
         const res = await axios.post(
           "http://localhost:5000/auth/register/student",
           {
@@ -637,17 +612,23 @@ function StudentForm() {
             regNo: reg,
             sem,
             year,
+            mobNo,
           }
         );
         students.push(res.data);
       }
     };
 
-    await createTeammate();
+     await createTeammate(); 
     const createTeam = async () => {
+      console.log('teacher', teacher);
       const res = await axios.post("http://localhost:5000/team", {
         students,
         projectName: teacher[0].projectName,
+        teacherEmail:teacher[0].teacherEmail,
+        // studentsEmails:studentsEmails[],
+        // studentID: studentID,
+
       });
       console.log(res.data);
     };
@@ -685,70 +666,16 @@ function StudentForm() {
         section: "",
         sem: "",
         year: "",
+        mobNo: "",
         // selectedProject: "",
       },
     ]);
 
     alert("Form Submission Successful");
+    localStorage.setItem('formSubmitted', 'true');
+
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-
-  //   const data = {
-  //     name,
-  //     email,
-  //     reg,
-  //     branch,
-  //     section,
-  //     specialization,
-  //     teacherName,
-  //     teacherEmail,
-  //     sem,
-  //     year,
-  //     projectName: selectedProject,
-  //     teammates,
-  //   };
-
-  //   fetch("http://localhost:3000/submit-form-data", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(data),
-  //   })
-  //     .then((response) => response.json())
-  //     .then((result) => {
-  //       console.log("Form submitted successfully:", result);
-  //       // Clear form fields after successful submission
-  //       setName("");
-  //       setEmail("");
-  //       setReg("");
-  //       setBranch("");
-  //       setSection("");
-  //       setSpecialization("");
-  //       setTeacherName("");
-  //       setTeacherEmail("");
-  //       setSem("");
-  //       setYear("");
-  //       setProjectName("");
-  //       setSelectedProject("");
-  //       setTeammates([
-  //         {
-  //           name: "",
-  //           email: "",
-  //           reg: "",
-  //           branch: "",
-  //           section: "",
-  //           sem: "",
-  //           year: "",
-  //         },
-  //       ]);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error submitting form:", error);
-  //     });
-  // };
 
   return (
     <div className="app__studentform">
@@ -804,6 +731,19 @@ function StudentForm() {
                 }
               />
             </div>
+            <div className="app__studentform-reg">
+              <label htmlFor={`mobNo${index}`}>Mob-No.:</label>
+              <input
+                placeholder="Contact-No."
+                type="text"
+                id={`reg${index}`}
+                className="teammate-input"
+                value={teammate.mobNo}
+                onChange={(e) =>
+                  handleTeammateChange(index, "mobNo", e.target.value)
+                }
+              />
+            </div>
 
             <div className="app__studentform-branch">
               <label htmlFor={`branch${index}`}>Branch:</label>
@@ -847,7 +787,7 @@ function StudentForm() {
               />
             </div>
 
-            <div className="app__studentform-year">
+            {/* <div className="app__studentform-year">
               <label htmlFor={`year${index}`}>Year:</label>
               <input
                 placeholder="Year"
@@ -859,26 +799,7 @@ function StudentForm() {
                   handleTeammateChange(index, "year", e.target.value)
                 }
               />
-            </div>
-
-            {/* <div className="app__studentform-project">
-                <label htmlFor={project${index}}>Project:</label>
-                <select
-                id={project${index}}
-                className="teammate-input"
-                value={teammate.selectedProject}
-                onChange={(event) =>
-                handleTeammateChange(index, 'selectedProject', event.target.value)
-                }
-                >
-                <option value="">Select Project</option>
-                {projects.map((project) => (
-                <option key={project.id} value={project.id}>
-                {project.name}
-                </option>
-                ))}
-                </select>
-                </div> */}
+            </div> */}
 
             {teammates.length > 1 && (
               <div
@@ -923,7 +844,7 @@ function StudentForm() {
               />
             </div>
 
-            <div className="app__studentform-specialization">
+            {/* <div className="app__studentform-specialization">
               <label htmlFor={`specialization${index}`}>Specialization:</label>
               <input
                 placeholder="Specialization"
@@ -935,7 +856,7 @@ function StudentForm() {
                   handleTeacherChange(index, "specialization", e.target.value)
                 }
               />
-            </div>
+            </div> */}
 
             <div className="app__studentform-projectname">
               <label htmlFor={`projectName${index}`}>Project Name:</label>
@@ -950,24 +871,6 @@ function StudentForm() {
                 }
               />
             </div>
-            {/* <div className="app__studentform-project">
-                <label htmlFor={project${index}}>Project:</label>
-                <select
-                id={project${index}}
-                className="teammate-input"
-                value={teammate.selectedProject}
-                onChange={(event) =>
-                handleTeammateChange(index, 'selectedProject', event.target.value)
-                }
-                >
-                <option value="">Select Project</option>
-                {projects.map((project) => (
-                <option key={project.id} value={project.id}>
-                {project.name}
-                </option>
-                ))}
-                </select>
-                </div> */}
 
             {teacher.length > 1 && (
               <div
@@ -980,9 +883,9 @@ function StudentForm() {
           </div>
         ))}
 
-        <div className="app__studentform-btn" onClick={handleAddTeacher}>
+        {/* <div className="app__studentform-btn" onClick={handleAddTeacher}>
           <button type="button">Add Teacher</button>
-        </div>
+        </div> */}
 
         <div className="app__studentform-btn">
           <button type="submit">Submit</button>

@@ -15,23 +15,27 @@ const loginStudentSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    section: {
+      type: String,
+    },
+    sem: {
+      type: String,
+    },
+    year: {
+      type: String,
+    },
+    mobNo: {
+      type: String,
+    },
+    course: {
+      type: String,
+    },
+    regNo: {
+      type: String,
+      required: true,
+      unique: true,
+    },
     userType: { type: String, enum: ['user'] },
-
-    // section: {
-    //   type: String,
-    // },
-    // sem: {
-    //   type: String,
-    // },
-    // year: {
-    //   type: String,
-    // },
-    
-    // regNo: {
-    //   type: String,
-    //   required: true,
-    //   unique: true,
-    // },
   },
 //   { timestamps: true }
 );

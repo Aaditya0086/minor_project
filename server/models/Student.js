@@ -26,6 +26,9 @@ const studentSchema = mongoose.Schema(
     year: {
       type: String,
     },
+    mobNo: {
+      type: String,
+    },
     
     regNo: {
       type: String,

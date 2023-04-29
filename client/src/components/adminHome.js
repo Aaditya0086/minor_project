@@ -203,7 +203,7 @@ export default function   AdminHome() {
           </div> */}
           <hr />
           <div className="app__adminhome-text">
-          <h5>Hello, {userData && userData.name}. Hello teacher welcome to your dashboard.</h5>
+          <h5>Hello, {userData && userData.name}. Welcome to your dashboard.</h5>
           </div>
           {/* <br /> */}
           <div className="app__adminhome-btn">

@@ -9,6 +9,12 @@ const teacherSchema = mongoose.Schema(
     specialization: {
       type: String,
     },
+    mobNo: {
+      type: String,
+    },
+    id: {
+      type: String,
+    },
     email: {
       type: String,
       required: true,

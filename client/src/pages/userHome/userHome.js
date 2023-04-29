@@ -38,10 +38,10 @@ export default function UserHome() {
     window.location.href = "./sign-in";
   };
 
-  const handleHereClick = () => {
-    // history.push('/pending project')
-    window.location.href = './student-form';
-  };
+  // const handleHereClick = () => {
+  //   // history.push('/pending project')
+  //   window.location.href = './student-form';
+  // };
 
   return (
     <div className="app__userhome">
@@ -58,7 +58,8 @@ export default function UserHome() {
           </div> */}
           <hr />
           <div className="app__userhome-text">
-          <h5>Hello, {userData && userData.name}. You have a pending project allocation. Please click <button onClick={handleHereClick} type="button" className="app__userhome-text-btn">here</button> to complete it.</h5>
+          <h5>Hello, {userData && userData.name}. Welcome to your Dashboard.</h5>
+          {/* <h5>Hello, {userData && userData.name}. You have a pending project-teacher consent form. Please click <button onClick={handleHereClick} type="button" className="app__userhome-text-btn">here</button> to complete it.</h5> */}
           </div>
           {/* <br /> */}
           <div className="app__userhome-btn">

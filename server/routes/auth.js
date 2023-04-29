@@ -2,7 +2,7 @@ const router = require("express").Router();
 const Teacher = require("../models/Teacher");
 const Student = require("../models/Student");
 const LoginStudent = require("../models/LoginStudent");
-const LoginTeacher = require("../models/LoginTeacher");
+// const LoginTeacher = require("../models/LoginTeacher");
 const jwt = require("jsonwebtoken");
 
 router.post("/register/teacher", async (req, res, next) => {
@@ -20,11 +20,11 @@ router.post("/register/teacher", async (req, res, next) => {
   }
 });
 
-router.post("/login/loginTeacher", async (req, res, next) => {
+router.post("/login/teacher", async (req, res, next) => {
   //login for teacher(admin)
   try {
     // const {email, password} = req.body
-    const user = await LoginTeacher.findOne({ email: req.body.email });
+    const user = await Teacher.findOne({ email: req.body.email });
     if (!user) return res.status(403).json("Wrong Email!");
 
     /* const isCorrect = await bcrypt.compare(req.body.password, user.password); */ //if password hashed
@@ -62,7 +62,6 @@ router.post("/register/student", async (req, res, next) => {
   //register a student 
   try {
     const newStudent = new Student(
-       
     req.body,
     );
 

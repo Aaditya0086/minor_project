@@ -11,6 +11,11 @@ import StudentForm from "./pages/studentForm/studentForm";
 import AdminHome from "./components/adminHome";
 import StudentProfile from "../src/pages/studentProfile/StudentProfile.js";
 import TeacherProfile from "../src/pages/teacherProfile/TeacherProfile.js";
+import ConsentForm from "./pages/consentForm/consentForm";
+import SearchProfile from "./pages/Search Profile/searchProfile";
+import RequestStatus from "./pages/RequestStatus/RequestStatus";
+import RequestAction from "./pages/Requests Action/RequestAction";
+import RequestDisplay from "./pages/Request Display/requestDisplay";
 // import SignUp from './components/signup.component'
 
 function App() {
@@ -72,6 +77,26 @@ function App() {
               <Route
                 path="/teacher-profile"
                 element={<TeacherProfile />}
+              />
+              <Route
+                path="/consent-forms"
+                element={<ConsentForm />}
+              />
+              <Route
+                path="/searched-profile"
+                element={<SearchProfile />}
+              />
+              <Route
+                path="/request-status"
+                element={<RequestStatus />}
+              />
+              <Route
+                path="/request-action"
+                element={<RequestAction />}
+              />
+              <Route
+                path="/request-display"
+                element={<RequestDisplay />}
               />
               {/* <Route path="/sign-up" element={<SignUp />} /> */}
             </Routes>

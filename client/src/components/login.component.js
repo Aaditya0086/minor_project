@@ -121,7 +121,7 @@ export default function Login() {
     const login = async () => {
       dispatch(loginStart());
       try {
-        let endpoint = userType === "normal" ? "loginStudent" : "loginTeacher";
+        let endpoint = userType === "normal" ? "loginStudent" : "teacher";
         const data = await axios.post(
           `http://localhost:5000/auth/login/${endpoint}`,
           {
@@ -162,7 +162,7 @@ export default function Login() {
           <label>Email address</label>
           <input
             type="email"
-            className="form-control"
+            className="form-controol"
             placeholder="Enter email"
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -172,7 +172,7 @@ export default function Login() {
           <label>Password</label>
           <input
             type="password"
-            className="form-control"
+            className="form-controol"
             placeholder="Enter password"
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -190,7 +190,7 @@ export default function Login() {
               onChange={(e) => setUserType(e.target.value)}
             />
             <label className="form-check-label" htmlFor="normalUser">
-              Normal User
+              Student
             </label>
           </div>
           <div className="form-check">
@@ -204,18 +204,18 @@ export default function Login() {
               onChange={(e) => setUserType(e.target.value)}
             />
             <label className="form-check-label" htmlFor="adminUser">
-              Admin
+              Teacher
             </label>
           </div>
         </div>
 
-        <div className="mb-3 app__login-type">
+        {/* <div className="mb-3 app__login-type">
           <label>Login Type</label>
           <select className="form-control" onChange={(e) => setLoginType(e.target.value)}>
 <option value="normal">Normal</option>
 <option value="admin">Admin</option>
 </select>
-</div>
+</div> */}
 
 <div className="d-grid app__login-btn">
       <button
@@ -230,9 +230,9 @@ export default function Login() {
         Submit
       </button>
     </div>
-    <p className="forgot-password">
+    {/* <p className="forgot-password">
       Forgot <a href="/">password?</a>
-    </p>
+    </p> */}
   </form>
 </div>
   );
